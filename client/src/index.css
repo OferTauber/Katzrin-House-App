@@ -3,6 +3,23 @@
   padding: 0;
 }
 
+.calendar-container {
+  height: 1000px;
+}
 html {
   font-size: 10px;
+}
+
+@media screen and (max-width: 980px) {
+  html {
+    font-size: 30px;
+  }
+}
+
+.nav {
+  height: 4rem;
+  width: 100%;
+  background-color: blue;
+  color: wheat;
+  font-size: 2rem;
 }
