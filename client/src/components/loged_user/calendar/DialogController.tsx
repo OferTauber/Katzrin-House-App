@@ -1,7 +1,7 @@
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import { useQuery } from '@tanstack/react-query';
-import { EventDTO, exclusive, User } from '../../../utils/types';
+import { EventDTO, exclusive, LogedUser, User } from '../../../utils/types';
 import Button from '@mui/material/Button';
 import {
   extreacJoinungList,
@@ -9,11 +9,13 @@ import {
 } from '../../../utils/utilFunctions';
 
 const DialogController = ({ event }: { event: EventDTO }) => {
-  const { data: logedUser }: { data: User | undefined } = useQuery(['user']);
+  const { data: logedUser }: { data: LogedUser | undefined } = useQuery([
+    'user',
+  ]);
 
   if (!event || !logedUser) return <></>;
 
-  return event.owner.email === logedUser.email ? (
+  return event.owner.id === logedUser.id ? (
     <UesersEvent event={event} />
   ) : (
     <NotUesersEvent event={event} logedUser={logedUser} />

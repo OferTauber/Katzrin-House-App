@@ -1,6 +1,6 @@
 import UserIsLoged from './components/loged_user/UserIsLoged';
 import { useQuery } from '@tanstack/react-query';
-import { User } from './utils/types';
+import { LogedUser } from './utils/types';
 import Spinner from './components/util_componenets/Spinner';
 import NoUserIsLoged from './components/no_loged_user/NoUserIsLoged';
 import Error from './components/util_componenets/Error';
@@ -15,9 +15,9 @@ function App() {
     isError,
     isLoading,
   } = useQuery(['user'], async () => {
-    const logedUser: User = {
+    const logedUser: LogedUser = {
       name: 'Ofer',
-      email: 'ofertauber@gmail.com',
+      id: 'ofertauber@gmail.com',
       isAdmin: true,
     };
     await sleep();

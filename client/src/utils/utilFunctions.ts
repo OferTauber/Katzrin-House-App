@@ -13,12 +13,12 @@ export const extreacJoinungList = (
   const joining = event.joining.map((user: User) => {
     if (!logedUser) return user.name;
 
-    return user.email === logedUser.email ? 'אני' : user.name;
+    return user.id === logedUser.id ? 'אני' : user.name;
   });
 
   return joining.join(', ');
 };
 
 export const userIsJoining = (event: EventDTO, logedUser: User): boolean => {
-  return !!event.joining.find((user: User) => user.email === logedUser?.email);
+  return !!event.joining.find((user: User) => user.id === logedUser?.id);
 };

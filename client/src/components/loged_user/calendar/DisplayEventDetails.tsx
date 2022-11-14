@@ -1,4 +1,4 @@
-import { EventDTO, exclusive, User } from '../../../utils/types';
+import { EventDTO, LogedUser, User } from '../../../utils/types';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -14,7 +14,9 @@ const DisplayEventDetails = ({
   event: EventDTO | undefined;
   closeDialog: () => void;
 }) => {
-  const { data: logedUser }: { data: User | undefined } = useQuery(['user']);
+  const { data: logedUser }: { data: LogedUser | undefined } = useQuery([
+    'user',
+  ]);
 
   if (!event || !logedUser) return <></>;
 
@@ -44,7 +46,7 @@ function DatesFromTo({ event }: { event: EventDTO }) {
 
 export default DisplayEventDetails;
 
-function extractTitle(logedUser: User, owner: User): String {
-  if (logedUser.email === owner.email) return 'הזמנה שלך';
+function extractTitle(logedUser: LogedUser, owner: User): String {
+  if (logedUser.id === owner.id) return 'הזמנה שלך';
   return 'הזמנה של ' + owner.name;
 }

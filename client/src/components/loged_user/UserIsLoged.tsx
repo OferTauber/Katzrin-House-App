@@ -1,12 +1,12 @@
 import React from 'react';
 import Nav from './Nav';
-import MyCalendar from './calendar/Calendar';
+import Calendar from './calendar/Calendar';
 
 const UserIsLoged = () => {
   return (
     <>
       <Nav />
-      <MyCalendar />
+      <Calendar />
     </>
   );
 };

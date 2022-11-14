@@ -3,10 +3,34 @@ export enum exclusive {
   unConfirmed,
   confirmed,
 }
-export interface User {
+
+export class User {
   name: string;
-  email: string;
-  isAdmin?: boolean;
+  id: string;
+
+  constructor(name: string, id: string) {
+    this.name = name;
+    this.id = id;
+  }
+}
+
+export class LogedUser extends User {
+  isAdmin: boolean;
+  token?: string;
+  email?: string;
+
+  constructor(
+    name: string,
+    id: string,
+    isAdmin: boolean,
+    token: string,
+    email: string,
+  ) {
+    super(name, id);
+    this.isAdmin = isAdmin;
+    this.token = token;
+    this.email = email;
+  }
 }
 
 export interface EventDTO {
