@@ -25,7 +25,7 @@ const DisplayEventDetails = ({
       <DialogTitle>{extractTitle(logedUser, event.owner)}</DialogTitle>
       <DialogContent>
         <DatesFromTo event={event} />
-        <DialogController event={event} />
+        <DialogController event={event} closeDialog={closeDialog} />
       </DialogContent>
     </Dialog>
   );

@@ -1,5 +1,63 @@
 import { User, EventDTO, LogedUser, exclusive } from './types';
 
+export const getAllEventsFromFile = () => {
+  return events;
+};
+
+export const loginFromFile = () => {
+  return Ofer;
+};
+
+export const getAllUsersFromFile = () => {
+  return allUsers;
+};
+
+export const addEventToFile = (newEvent: EventDTO) => {
+  events.push(newEvent);
+  return;
+};
+
+const findEventIndex = (eventToFind: EventDTO): number => {
+  const index = events.findIndex(
+    (listedEvent) => listedEvent.id === eventToFind.id,
+  );
+  if (-1 === index) throw new Error('Event not found!');
+
+  return index;
+};
+
+export const deleteEventFile = (event: EventDTO) => {
+  const index = findEventIndex(event);
+  events.splice(index, 1);
+};
+
+export const joinEventInFile = (
+  eventToJoin: EventDTO,
+  logedUser: LogedUser,
+) => {
+  const index = findEventIndex(eventToJoin);
+
+  const user: User = logedUser;
+  events[index].joining.push(user);
+};
+
+export const leaveEventInFile = (
+  eventToLeave: EventDTO,
+  logedUser: LogedUser,
+) => {
+  const eventsIndex = events.findIndex(
+    (listedEvent) => listedEvent.id === eventToLeave.id,
+  );
+  if (-1 === eventsIndex) throw new Error('Event not found!');
+
+  const userIndex = eventToLeave.joining.findIndex(
+    (user) => user.id === logedUser.id,
+  );
+  if (-1 === userIndex) throw new Error('User not found withins the event!');
+
+  events[eventsIndex].joining.splice(userIndex, 1);
+};
+
 const Ofer: LogedUser = {
   name: 'עופר',
   id: 'ofertauber@gmail.com',
@@ -23,6 +81,7 @@ const events: Array<EventDTO> = [
     owner: Ofer,
     isExclusiveConfirmed: exclusive.no,
     joining: [Shakked],
+    id: '1',
   },
   {
     title: 'מסיבה',
@@ -32,6 +91,7 @@ const events: Array<EventDTO> = [
     owner: Maya,
     isExclusiveConfirmed: exclusive.no,
     joining: [Ofer, Shakked],
+    id: '2',
   },
   {
     title: 'עוד מסיבה',
@@ -41,6 +101,7 @@ const events: Array<EventDTO> = [
     owner: Maya,
     isExclusiveConfirmed: exclusive.no,
     joining: [Shakked],
+    id: '3',
   },
   {
     title: 'אירוע',
@@ -49,6 +110,7 @@ const events: Array<EventDTO> = [
     owner: Maya,
     isExclusiveConfirmed: exclusive.unConfirmed,
     joining: [Ofer, Shakked],
+    id: '4',
   },
   {
     title: 'אירוע פרטי 1',
@@ -57,6 +119,7 @@ const events: Array<EventDTO> = [
     owner: Ofer,
     isExclusiveConfirmed: exclusive.unConfirmed,
     joining: [],
+    id: '5',
   },
   {
     title: 'אירוע פרטי 2',
@@ -65,6 +128,7 @@ const events: Array<EventDTO> = [
     owner: Ofer,
     isExclusiveConfirmed: exclusive.confirmed,
     joining: [],
+    id: '6',
   },
 
   {
@@ -74,22 +138,6 @@ const events: Array<EventDTO> = [
     owner: Shakked,
     isExclusiveConfirmed: exclusive.confirmed,
     joining: [],
+    id: '7',
   },
 ];
-
-export const getAllEventsFromFile = () => {
-  return events;
-};
-
-export const loginFromFile = () => {
-  return Ofer;
-};
-
-export const getAllUsersFromFile = () => {
-  return allUsers;
-};
-
-export const addEventToFile = (newEvent: EventDTO) => {
-  events.push(newEvent);
-  return;
-};

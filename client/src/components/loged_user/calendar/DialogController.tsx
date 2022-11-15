@@ -7,8 +7,15 @@ import {
   extreacJoinungList,
   userIsJoining,
 } from '../../../utils/utilFunctions';
+import { joinToEvent, leaveEvent, deleteEvent } from '../../../utils/axios';
 
-const DialogController = ({ event }: { event: EventDTO }) => {
+const DialogController = ({
+  event,
+  closeDialog,
+}: {
+  event: EventDTO;
+  closeDialog: () => void;
+}) => {
   const { data: logedUser }: { data: LogedUser | undefined } = useQuery([
     'user',
   ]);
@@ -16,15 +23,42 @@ const DialogController = ({ event }: { event: EventDTO }) => {
   if (!event || !logedUser) return <></>;
 
   return event.owner.id === logedUser.id ? (
-    <UesersEvent event={event} />
+    <UesersEvent
+      event={event}
+      closeDialog={closeDialog}
+      logedUser={logedUser}
+    />
   ) : (
-    <NotUesersEvent event={event} logedUser={logedUser} />
+    <NotUesersEvent
+      event={event}
+      logedUser={logedUser}
+      closeDialog={closeDialog}
+    />
   );
 };
 
 export default DialogController;
 
-const UesersEvent = ({ event }: { event: EventDTO }) => {
+const UesersEvent = ({
+  event,
+  logedUser,
+  closeDialog,
+}: {
+  event: EventDTO;
+  logedUser: LogedUser;
+  closeDialog: () => void;
+}) => {
+  const { refetch } = useQuery(['events']);
+  const handelClick = (
+    callback: any,
+    event: EventDTO,
+    logedUser?: LogedUser,
+  ) => {
+    callback(event, logedUser);
+    refetch();
+    closeDialog();
+  };
+
   let content = <></>;
 
   switch (event.isExclusiveConfirmed) {
@@ -49,7 +83,9 @@ const UesersEvent = ({ event }: { event: EventDTO }) => {
     <>
       {content}
       <DialogActions>
-        <Button>ביטול הזמנה</Button>
+        <Button onClick={() => handelClick(deleteEvent, event, logedUser)}>
+          ביטול הזמנה
+        </Button>
       </DialogActions>
     </>
   );
@@ -58,10 +94,24 @@ const UesersEvent = ({ event }: { event: EventDTO }) => {
 const NotUesersEvent = ({
   event,
   logedUser,
+  closeDialog,
 }: {
   event: EventDTO;
-  logedUser: User;
+  logedUser: LogedUser;
+  closeDialog: () => void;
 }) => {
+  const { refetch } = useQuery(['events']);
+
+  const handelClick = (
+    callback: any,
+    event: EventDTO,
+    logedUser?: LogedUser,
+  ) => {
+    callback(event, logedUser);
+    refetch();
+    closeDialog();
+  };
+
   if (event.isExclusiveConfirmed !== exclusive.no) {
     return (
       <DialogContentText>זוהי הזמנה סגורה, לא ניתן להצטרף</DialogContentText>
@@ -69,11 +119,15 @@ const NotUesersEvent = ({
   }
   const button = userIsJoining(event, logedUser) ? (
     <DialogActions>
-      <Button>יציאה</Button>
+      <Button onClick={() => handelClick(leaveEvent, event, logedUser)}>
+        יציאה
+      </Button>
     </DialogActions>
   ) : (
     <DialogActions>
-      <Button>הצטרפות</Button>
+      <Button onClick={() => handelClick(joinToEvent, event, logedUser)}>
+        הצטרפות
+      </Button>
     </DialogActions>
   );
 

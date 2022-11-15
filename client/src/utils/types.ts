@@ -41,4 +41,5 @@ export interface EventDTO {
   isExclusiveConfirmed?: exclusive;
   allDay?: boolean;
   joining: Array<User>;
+  id: string;
 }
