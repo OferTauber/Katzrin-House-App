@@ -127,7 +127,7 @@ const events: Array<EventDTO> = [
     start: formatDate(new Date(2022, 10, 28)),
     end: formatDate(new Date(2022, 10, 30)),
     owner: Ofer,
-    isExclusiveConfirmed: exclusive.confirmed,
+    isExclusiveConfirmed: exclusive.no,
     joining: [],
     id: '6',
   },

@@ -11,12 +11,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Typography } from '@mui/material';
 import {
   validateDatesForReservation,
   formatDate,
+  datesValidationStatus,
 } from '../../../utils/utilFunctions';
 import { useQuery } from '@tanstack/react-query';
-import { EventDTO } from '../../../utils/types';
+import { EventDTO, exclusive } from '../../../utils/types';
+import { colors } from '../../../utils/style';
 
 const NewEventForm = ({
   openBookingForm,
@@ -28,7 +31,9 @@ const NewEventForm = ({
   const [startDate, setStartDate] = useState(formatDate(new Date()));
   const [endDate, setEndDate] = useState(formatDate(new Date()));
   const [isExclusive, setIsExclusive] = useState(false);
-  const [datesAreValid, setDatesAreValid] = useState(true);
+  const [datesAreValid, setDatesAreValid] = useState(
+    datesValidationStatus.valid,
+  );
 
   const { data: events }: { data: EventDTO[] | undefined } = useQuery([
     'events',
@@ -44,17 +49,25 @@ const NewEventForm = ({
 
   useEffect(() => {
     if (events) {
-      setTimeout(() => {
-        setDatesAreValid(
-          validateDatesForReservation(startDate, endDate, isExclusive, events),
-        );
-      }, 500);
+      setDatesAreValid(
+        validateDatesForReservation(startDate, endDate, isExclusive, events),
+      );
     }
   }, [startDate, endDate, isExclusive, events]);
 
   useEffect(() => {
-    console.log(`Dates are ${datesAreValid ? 'valid :)' : 'NOT valid'}`);
-  }, [datesAreValid]);
+    console.log(
+      `Dates are ${
+        datesAreValid === datesValidationStatus.valid ? 'valid :)' : 'NOT valid'
+      }`,
+    );
+  });
+
+  const chooseTextColor = (status: datesValidationStatus) => {
+    return status === datesValidationStatus.valid
+      ? { color: colors.green }
+      : { color: colors.red };
+  };
 
   return (
     <Dialog
@@ -90,6 +103,9 @@ const NewEventForm = ({
               }}
               required
             />
+            <Typography sx={chooseTextColor(datesAreValid)} variant="caption">
+              {datesAreValid}
+            </Typography>
             <FormControlLabel
               control={
                 <Checkbox
