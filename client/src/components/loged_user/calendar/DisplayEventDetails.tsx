@@ -34,12 +34,8 @@ const DisplayEventDetails = ({
 function DatesFromTo({ event }: { event: EventDTO }) {
   return (
     <>
-      <DialogContentText>{`מתאריך: ${exctracDataToString(
-        event?.start,
-      )}`}</DialogContentText>
-      <DialogContentText>{`עד תאריך: ${exctracDataToString(
-        event?.end,
-      )}`}</DialogContentText>
+      <DialogContentText>{`מתאריך: ${event?.start}`}</DialogContentText>
+      <DialogContentText>{`עד תאריך: ${event?.end}`}</DialogContentText>
     </>
   );
 }

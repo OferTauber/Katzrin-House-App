@@ -10,10 +10,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 export default function FormDialog() {
   const [open, setOpen] = useState(true);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };

@@ -1,7 +1,7 @@
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import { useQuery } from '@tanstack/react-query';
-import { EventDTO, exclusive, LogedUser, User } from '../../../utils/types';
+import { EventDTO, exclusive, LogedUser } from '../../../utils/types';
 import Button from '@mui/material/Button';
 import {
   extreacJoinungList,

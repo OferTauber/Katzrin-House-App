@@ -1,4 +1,5 @@
 import { User, EventDTO, LogedUser, exclusive } from './types';
+import { formatDate } from '../utils/utilFunctions';
 
 export const getAllEventsFromFile = () => {
   return events;
@@ -76,8 +77,8 @@ const events: Array<EventDTO> = [
   {
     title: 'הזמנה',
     allDay: true,
-    start: new Date(2022, 10, 1),
-    end: new Date(2022, 10, 3),
+    start: formatDate(new Date(2022, 10, 1)),
+    end: formatDate(new Date(2022, 10, 3)),
     owner: Ofer,
     isExclusiveConfirmed: exclusive.no,
     joining: [Shakked],
@@ -86,8 +87,8 @@ const events: Array<EventDTO> = [
   {
     title: 'מסיבה',
     allDay: true,
-    start: new Date(2022, 10, 4),
-    end: new Date(2022, 10, 6),
+    start: formatDate(new Date(2022, 10, 4)),
+    end: formatDate(new Date(2022, 10, 6)),
     owner: Maya,
     isExclusiveConfirmed: exclusive.no,
     joining: [Ofer, Shakked],
@@ -96,8 +97,8 @@ const events: Array<EventDTO> = [
   {
     title: 'עוד מסיבה',
     allDay: true,
-    start: new Date(2022, 10, 7),
-    end: new Date(2022, 10, 9),
+    start: formatDate(new Date(2022, 10, 7)),
+    end: formatDate(new Date(2022, 10, 9)),
     owner: Maya,
     isExclusiveConfirmed: exclusive.no,
     joining: [Shakked],
@@ -105,8 +106,8 @@ const events: Array<EventDTO> = [
   },
   {
     title: 'אירוע',
-    start: new Date(2022, 10, 10),
-    end: new Date(2022, 10, 11),
+    start: formatDate(new Date(2022, 10, 10)),
+    end: formatDate(new Date(2022, 10, 11)),
     owner: Maya,
     isExclusiveConfirmed: exclusive.unConfirmed,
     joining: [Ofer, Shakked],
@@ -114,8 +115,8 @@ const events: Array<EventDTO> = [
   },
   {
     title: 'אירוע פרטי 1',
-    start: new Date(2022, 10, 22),
-    end: new Date(2022, 10, 24),
+    start: formatDate(new Date(2022, 10, 22)),
+    end: formatDate(new Date(2022, 10, 24)),
     owner: Ofer,
     isExclusiveConfirmed: exclusive.unConfirmed,
     joining: [],
@@ -123,8 +124,8 @@ const events: Array<EventDTO> = [
   },
   {
     title: 'אירוע פרטי 2',
-    start: new Date(2022, 10, 28),
-    end: new Date(2022, 10, 30),
+    start: formatDate(new Date(2022, 10, 28)),
+    end: formatDate(new Date(2022, 10, 30)),
     owner: Ofer,
     isExclusiveConfirmed: exclusive.confirmed,
     joining: [],
@@ -133,8 +134,8 @@ const events: Array<EventDTO> = [
 
   {
     title: 'חגיגה',
-    start: new Date(2022, 10, 15),
-    end: new Date(2022, 10, 20),
+    start: formatDate(new Date(2022, 10, 15)),
+    end: formatDate(new Date(2022, 10, 20)),
     owner: Shakked,
     isExclusiveConfirmed: exclusive.confirmed,
     joining: [],

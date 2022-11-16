@@ -5,13 +5,16 @@ import { format, parse, startOfWeek, getDay } from 'date-fns';
 import DisplayEventDetails from './DisplayEventDetails';
 // import ReactDatePicker from 'react-datepicker';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { EventDTO, exclusive, User, LogedUser } from '../../../utils/types';
+import { EventDTO, exclusive, User } from '../../../utils/types';
 import { useQuery } from '@tanstack/react-query';
 import { colors } from '../../../utils/style';
 import { userIsJoining } from '../../../utils/utilFunctions';
 import { fetchCalendsrEvents } from '../../../utils/axios';
 import Spinner from '../../util_componenets/Spinner';
 import Error from '../../util_componenets/Error';
+import Button from '@mui/material/Button';
+import Stack from '@mui/system/Stack';
+import NewEventForm from './NewEventForm';
 
 const locales = {
   he: require('date-fns/locale/he'),
@@ -36,6 +39,7 @@ const MyCalendar = () => {
   const [eventDetailsToDispay, setEventDetailsToDispay] = useState<
     undefined | EventDTO
   >(undefined);
+  const [openBookingForm, setOpenBookingForm] = useState<boolean>(false);
 
   if (!logedUser) return <></>;
   if (isError) return <Error />;
@@ -101,6 +105,20 @@ const MyCalendar = () => {
         event={eventDetailsToDispay}
         closeDialog={closeDialog}
       />
+      <NewEventForm
+        openBookingForm={openBookingForm}
+        setOpenBookingForm={setOpenBookingForm}
+      />
+      <Stack
+        spacing={2}
+        direction="row"
+        justifyContent="flex-end"
+        sx={{ margin: '1.5rem' }}
+      >
+        <Button variant="contained" onClick={() => setOpenBookingForm(true)}>
+          יצירת הזמנה חדשה
+        </Button>
+      </Stack>
     </>
   );
 };

@@ -35,8 +35,8 @@ export class LogedUser extends User {
 
 export interface EventDTO {
   title: string;
-  start: Date;
-  end: Date;
+  start: string;
+  end: string;
   owner: User;
   isExclusiveConfirmed?: exclusive;
   allDay?: boolean;
