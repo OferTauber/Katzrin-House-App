@@ -43,3 +43,8 @@ export interface EventDTO {
   joining: Array<User>;
   id: string;
 }
+
+export class AxiosDTO {
+  error?: any;
+  data?: any;
+}

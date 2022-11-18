@@ -15,7 +15,7 @@ import { Typography } from '@mui/material';
 import {
   validateDatesForReservation,
   formatDate,
-  datesValidationStatus,
+  isDatesInvalid,
 } from '../../../utils/utilFunctions';
 import { useQuery } from '@tanstack/react-query';
 import { EventDTO, exclusive } from '../../../utils/types';
@@ -31,13 +31,12 @@ const NewEventForm = ({
   const [startDate, setStartDate] = useState(formatDate(new Date()));
   const [endDate, setEndDate] = useState(formatDate(new Date()));
   const [isExclusive, setIsExclusive] = useState(false);
-  const [datesAreValid, setDatesAreValid] = useState(
-    datesValidationStatus.valid,
-  );
+  const [datesAreValid, setDatesAreValid] = useState(isDatesInvalid.valid);
 
   const { data: events }: { data: EventDTO[] | undefined } = useQuery([
     'events',
   ]);
+  const { refetch } = useQuery(['events']);
 
   const handelDateChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -55,19 +54,13 @@ const NewEventForm = ({
     }
   }, [startDate, endDate, isExclusive, events]);
 
-  useEffect(() => {
-    console.log(
-      `Dates are ${
-        datesAreValid === datesValidationStatus.valid ? 'valid :)' : 'NOT valid'
-      }`,
-    );
-  });
-
-  const chooseTextColor = (status: datesValidationStatus) => {
-    return status === datesValidationStatus.valid
+  const chooseTextColor = (status: isDatesInvalid) => {
+    return status === isDatesInvalid.valid
       ? { color: colors.green }
       : { color: colors.red };
   };
+
+  const handelSubmit = () => {};
 
   return (
     <Dialog
@@ -78,7 +71,7 @@ const NewEventForm = ({
     >
       <Box width={'14rem'} height={'25rem'}>
         <FormGroup>
-          <Stack spacing={4} sx={{ padding: '1rem' }}>
+          <Stack spacing={3} sx={{ padding: '1rem' }}>
             <TextField
               type="date"
               label="תאריך כניסה"
@@ -104,7 +97,7 @@ const NewEventForm = ({
               required
             />
             <Typography sx={chooseTextColor(datesAreValid)} variant="caption">
-              {datesAreValid}
+              {datesAreValid || 'ניתן להזמין'}
             </Typography>
             <FormControlLabel
               control={
@@ -115,6 +108,13 @@ const NewEventForm = ({
               }
               label="הזמנה סגורה"
             />
+            <Button
+              variant="contained"
+              disabled={!!datesAreValid}
+              onClick={handelSubmit}
+            >
+              הזמנה
+            </Button>
           </Stack>
         </FormGroup>
       </Box>

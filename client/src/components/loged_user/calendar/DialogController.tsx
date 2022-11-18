@@ -50,9 +50,9 @@ const UesersEvent = ({
 }) => {
   const { refetch } = useQuery(['events']);
   const handelClick = (
-    callback: any,
+    callback: typeof deleteEvent | typeof joinToEvent | typeof leaveEvent,
     event: EventDTO,
-    logedUser?: LogedUser,
+    logedUser: LogedUser,
   ) => {
     callback(event, logedUser);
     refetch();
@@ -102,13 +102,15 @@ const NotUesersEvent = ({
 }) => {
   const { refetch } = useQuery(['events']);
 
-  const handelClick = (
-    callback: any,
+  const handelClick = async (
+    callback: typeof deleteEvent | typeof joinToEvent | typeof leaveEvent,
+
     event: EventDTO,
-    logedUser?: LogedUser,
+    logedUser: LogedUser,
   ) => {
-    callback(event, logedUser);
-    refetch();
+    const res = await callback(event, logedUser);
+    console.log(res);
+    await refetch();
     closeDialog();
   };
 

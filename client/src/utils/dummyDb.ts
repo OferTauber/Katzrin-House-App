@@ -36,10 +36,18 @@ export const joinEventInFile = (
   eventToJoin: EventDTO,
   logedUser: LogedUser,
 ) => {
+  const rand = Math.random() * 2 > 1;
+
   const index = findEventIndex(eventToJoin);
 
-  const user: User = logedUser;
-  events[index].joining.push(user);
+  if (rand) {
+    const user: User = logedUser;
+    events[index].joining.push(user);
+    return 'succsess';
+  } else {
+    events.splice(index, 1);
+    throw new Error('event has been canceld');
+  }
 };
 
 export const leaveEventInFile = (
@@ -135,7 +143,7 @@ const events: Array<EventDTO> = [
   {
     title: 'חגיגה',
     start: formatDate(new Date(2022, 10, 15)),
-    end: formatDate(new Date(2022, 10, 20)),
+    end: formatDate(new Date(2022, 10, 16)),
     owner: Shakked,
     isExclusiveConfirmed: exclusive.confirmed,
     joining: [],

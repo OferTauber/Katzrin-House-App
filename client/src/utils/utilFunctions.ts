@@ -1,5 +1,5 @@
 import { User, EventDTO, exclusive } from './types';
-import { format, isAfter, isBefore, isPast } from 'date-fns';
+import { format, isAfter, isBefore, isPast, endOfDay } from 'date-fns';
 
 export const exctracDataToString = (date: Date): string => {
   return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
@@ -23,8 +23,8 @@ export const extreacJoinungList = (
 export const userIsJoining = (event: EventDTO, logedUser: User): boolean => {
   return !!event.joining.find((user: User) => user.id === logedUser?.id);
 };
-export enum datesValidationStatus {
-  valid = 'ניתן להזמין',
+export enum isDatesInvalid {
+  valid = '',
   expired = 'לא ניתן להזמין תאריכים שכבר עברו',
   blockedByOpen = 'כבר קיימת הזמנה בטווח התאריכים',
   blockedByClose = 'כבר קיימת הזמנה סגורה בטווח התאריכים',
@@ -36,12 +36,15 @@ export const validateDatesForReservation = (
   dateEnd: string,
   isClose: boolean,
   events: EventDTO[],
-): datesValidationStatus => {
-  if (isPast(new Date(dateStart)) || isPast(new Date(dateEnd)))
-    return datesValidationStatus.expired;
+): isDatesInvalid => {
+  if (
+    isPast(endOfDay(new Date(dateStart))) ||
+    isPast(endOfDay(new Date(dateEnd)))
+  )
+    return isDatesInvalid.expired;
 
   if (isBefore(new Date(dateEnd), new Date(dateStart)))
-    return datesValidationStatus.crossDates;
+    return isDatesInvalid.crossDates;
 
   const filreedEvents = isClose
     ? [...events]
@@ -59,11 +62,9 @@ export const validateDatesForReservation = (
     return true;
   });
 
-  if (!blockingEvents) return datesValidationStatus.valid;
+  if (!blockingEvents) return isDatesInvalid.valid;
 
-  return isClose
-    ? datesValidationStatus.blockedByOpen
-    : datesValidationStatus.blockedByClose;
+  return isClose ? isDatesInvalid.blockedByOpen : isDatesInvalid.blockedByClose;
 };
 
 function filterExclusiveEventsOnly(events: EventDTO[]) {

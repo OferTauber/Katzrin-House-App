@@ -9,6 +9,7 @@ import {
   leaveEventInFile,
   deleteEventFile,
 } from './dummyDb';
+import { AxiosDTO } from './types';
 
 const URL = 'https://637111510399d1995d8a71a9.mockapi.io';
 
@@ -32,6 +33,7 @@ export const fetchCalendsrEvents = async () => {
 };
 
 export const bookNewEvent = async (event: EventDTO) => {
+  // todo : Promise<AxiosDTO>
   return await addEventToFile(event);
 };
 
@@ -39,16 +41,36 @@ export const joinToEvent = async (
   eventsToJoin: EventDTO,
   logedUser: LogedUser,
 ) => {
-  return await joinEventInFile(eventsToJoin, logedUser);
+  const toReturn = new AxiosDTO();
+  try {
+    toReturn.data = await joinEventInFile(eventsToJoin, logedUser);
+  } catch (e) {
+    toReturn.error = e;
+  }
+  return toReturn;
 };
 
 export const leaveEvent = async (
   eventsToLeave: EventDTO,
   logedUser: LogedUser,
-) => {
-  return await leaveEventInFile(eventsToLeave, logedUser);
+): Promise<AxiosDTO> => {
+  const toRetun = new AxiosDTO();
+  try {
+    toRetun.data = await leaveEventInFile(eventsToLeave, logedUser);
+  } catch (e) {
+    toRetun.error = e;
+  }
+  return toRetun;
 };
 
-export const deleteEvent = async (eventsToDelete: EventDTO) => {
-  return await deleteEventFile(eventsToDelete);
+export const deleteEvent = async (
+  eventsToDelete: EventDTO,
+): Promise<AxiosDTO> => {
+  const toRetun = new AxiosDTO();
+  try {
+    toRetun.data = await deleteEventFile(eventsToDelete);
+  } catch (e) {
+    toRetun.error = e;
+  }
+  return toRetun;
 };
