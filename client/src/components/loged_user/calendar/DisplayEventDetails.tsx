@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import DialogController from './DialogController';
 import { DialogContent } from '@mui/material';
 import { exctracDataToString } from '../../../utils/utilFunctions';
+import { QueryKeys } from '../../../utils/types';
 
 const DisplayEventDetails = ({
   event,
@@ -15,7 +16,7 @@ const DisplayEventDetails = ({
   closeDialog: () => void;
 }) => {
   const { data: logedUser }: { data: LogedUser | undefined } = useQuery([
-    'user',
+    QueryKeys.user,
   ]);
 
   if (!event || !logedUser) return <></>;

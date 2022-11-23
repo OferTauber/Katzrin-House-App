@@ -16,19 +16,17 @@ export class User {
 
 export class LogedUser extends User {
   isAdmin: boolean;
-  token?: string;
   email?: string;
 
   constructor(
     name: string,
     id: string,
     isAdmin: boolean,
-    token: string,
+
     email: string,
   ) {
     super(name, id);
     this.isAdmin = isAdmin;
-    this.token = token;
     this.email = email;
   }
 }
@@ -47,4 +45,9 @@ export interface EventDTO {
 export class AxiosDTO {
   error?: any;
   data?: any;
+}
+
+export enum QueryKeys {
+  user = 'user',
+  events = 'events',
 }

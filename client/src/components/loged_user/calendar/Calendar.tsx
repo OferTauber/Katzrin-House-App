@@ -7,6 +7,7 @@ import DisplayEventDetails from './DisplayEventDetails';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { EventDTO, exclusive, User } from '../../../utils/types';
 import { useQuery } from '@tanstack/react-query';
+import { QueryKeys } from '../../../utils/types';
 import { colors } from '../../../utils/style';
 import { userIsJoining } from '../../../utils/utilFunctions';
 import { fetchCalendsrEvents } from '../../../utils/axios';
@@ -29,12 +30,14 @@ const localizer = dateFnsLocalizer({
 });
 
 const MyCalendar = () => {
-  const { data: logedUser }: { data: User | undefined } = useQuery(['user']);
+  const { data: logedUser }: { data: User | undefined } = useQuery([
+    QueryKeys.user,
+  ]);
   const {
     data: events,
     isError,
     isLoading,
-  } = useQuery(['events'], () => fetchCalendsrEvents());
+  } = useQuery([QueryKeys.events], () => fetchCalendsrEvents());
 
   const [eventDetailsToDispay, setEventDetailsToDispay] = useState<
     undefined | EventDTO

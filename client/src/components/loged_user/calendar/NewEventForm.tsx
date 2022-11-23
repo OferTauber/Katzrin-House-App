@@ -12,6 +12,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
+import { QueryKeys } from '../../../utils/types';
 import {
   validateDatesForReservation,
   formatDate,
@@ -34,9 +35,9 @@ const NewEventForm = ({
   const [datesAreValid, setDatesAreValid] = useState(isDatesInvalid.valid);
 
   const { data: events }: { data: EventDTO[] | undefined } = useQuery([
-    'events',
+    QueryKeys.events,
   ]);
-  const { refetch } = useQuery(['events']);
+  const { refetch } = useQuery([QueryKeys.events]);
 
   const handelDateChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

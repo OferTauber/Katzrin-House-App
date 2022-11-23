@@ -8,6 +8,7 @@ import {
   userIsJoining,
 } from '../../../utils/utilFunctions';
 import { joinToEvent, leaveEvent, deleteEvent } from '../../../utils/axios';
+import { QueryKeys } from '../../../utils/types';
 
 const DialogController = ({
   event,
@@ -17,7 +18,7 @@ const DialogController = ({
   closeDialog: () => void;
 }) => {
   const { data: logedUser }: { data: LogedUser | undefined } = useQuery([
-    'user',
+    QueryKeys.user,
   ]);
 
   if (!event || !logedUser) return <></>;
@@ -48,7 +49,7 @@ const UesersEvent = ({
   logedUser: LogedUser;
   closeDialog: () => void;
 }) => {
-  const { refetch } = useQuery(['events']);
+  const { refetch } = useQuery([QueryKeys.events]);
   const handelClick = (
     callback: typeof deleteEvent | typeof joinToEvent | typeof leaveEvent,
     event: EventDTO,
@@ -100,7 +101,7 @@ const NotUesersEvent = ({
   logedUser: LogedUser;
   closeDialog: () => void;
 }) => {
-  const { refetch } = useQuery(['events']);
+  const { refetch } = useQuery([QueryKeys.events]);
 
   const handelClick = async (
     callback: typeof deleteEvent | typeof joinToEvent | typeof leaveEvent,
