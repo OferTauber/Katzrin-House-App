@@ -10,12 +10,12 @@ import {
 import { AuthService } from './auth.service';
 import { AuthCredentialsDTO } from 'src/consts/classes_and_DTOs';
 
-@Controller('auth')
+@Controller('/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Get('/login')
-  async login(@Body() req: AuthCredentialsDTO): Promise<string> {
+  async login(@Headers() req: AuthCredentialsDTO): Promise<string> {
     const token = await this.authService.login(req);
 
     return token;

@@ -18,13 +18,7 @@ export class LogedUser extends User {
   isAdmin: boolean;
   email?: string;
 
-  constructor(
-    name: string,
-    id: string,
-    isAdmin: boolean,
-
-    email: string,
-  ) {
+  constructor(name: string, id: string, isAdmin: boolean, email: string) {
     super(name, id);
     this.isAdmin = isAdmin;
     this.email = email;
@@ -50,4 +44,9 @@ export class AxiosDTO {
 export enum QueryKeys {
   user = 'user',
   events = 'events',
+}
+
+export enum RouteNames {
+  signIn = '/signIn',
+  login = '/login',
 }

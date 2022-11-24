@@ -2,6 +2,7 @@ export class PayloadDTO {
   email: string;
   isAdmin: boolean;
   id: string;
+  name: string;
 }
 
 export class UserToExport extends PayloadDTO {

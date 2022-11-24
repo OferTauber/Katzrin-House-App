@@ -1,17 +1,29 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { QueryKeys } from '../../utils/types';
-import { login } from '../../utils/axios';
+import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAppState } from '../../utils/state';
+import UserIsLoged from '../loged_user/UserIsLoged';
+import LoginForm from './LoginForm';
+import SignInForm from './SignInForm';
 
 const NoUserIsLoged = () => {
-  const validData = { email: 'ofertauber@gmailk.com', password: '123' };
-  const invalidData = { email: 'ofertauber@gmailk.com', password: '124' };
+  const [isLogin, setIsLogin] = useState(true);
 
-  // const login = (data: { email: string; password: string }) => {
-  //   useQuery([QueryKeys.user], login(data));
-  // };
+  const switchToSignin = () => {
+    setIsLogin(false);
+  };
+  const switchToLogin = () => {
+    setIsLogin(true);
+  };
 
-  return <div>NoUserIsLoged</div>;
+  return (
+    <>
+      {isLogin ? (
+        <LoginForm switchToSignin={switchToSignin} />
+      ) : (
+        <SignInForm switchToLogin={switchToLogin} />
+      )}{' '}
+    </>
+  );
 };
 
 export default NoUserIsLoged;

@@ -1,20 +1,34 @@
 import axios from 'axios';
-import { User, EventDTO, LogedUser } from './types';
+import { User, EventDTO, LogedUser, AxiosDTO } from './types';
 import {
   getAllUsersFromFile,
-  loginFromFile,
   getAllEventsFromFile,
   addEventToFile,
   joinEventInFile,
   leaveEventInFile,
   deleteEventFile,
 } from './dummyDb';
-import { AxiosDTO } from './types';
 
-const URL = 'https://637111510399d1995d8a71a9.mockapi.io';
+const URL: string = process.env.REACT_APP_URL + '';
+
+export const getAuthToken = async (
+  email: string,
+  password: string,
+): Promise<string> => {
+  const apiResponse = await axios.get(URL + '/auth/login', {
+    headers: {
+      email,
+      password,
+    },
+  });
+
+  return apiResponse.data;
+};
+
+//! OLD ! OLD ! OLD ! OLD ! OLD !
 
 export const fetchUserFromMock = async (): Promise<User> => {
-  const res = await axios.get(URL + '/users/1');
+  const res = await axios.get('/auth/login');
   const user: User = res.data;
 
   return user;
@@ -22,10 +36,6 @@ export const fetchUserFromMock = async (): Promise<User> => {
 
 export const fetchAllUsers = async () => {
   return await getAllUsersFromFile();
-};
-
-export const login = async () => {
-  return await loginFromFile();
 };
 
 export const fetchCalendsrEvents = async () => {

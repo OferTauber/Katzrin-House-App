@@ -22,9 +22,9 @@ export class AuthService {
   async login(authCredentials: AuthCredentialsDTO): Promise<string> {
     try {
       const user: User = await getUserByEmailFile(authCredentials.email);
-      const { email, id, isAdmin } = user;
+      const { email, id, isAdmin, name } = user;
 
-      const payload: PayloadDTO = { email, id, isAdmin };
+      const payload: PayloadDTO = { email, id, isAdmin, name };
 
       if (!user || user.password !== authCredentials.password)
         // todo becrypt
